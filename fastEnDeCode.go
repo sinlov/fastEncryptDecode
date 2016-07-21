@@ -1,4 +1,4 @@
-package go_fast_encrypt_decode
+package fastEncryptDecode
 
 import (
 	"crypto/md5"
