@@ -9,16 +9,6 @@ import (
 	"strings"
 )
 
-// byte array to string
-func byte2String(p []byte) string {
-	for i := 0; i < len(p); i++ {
-		if p[i] == 0 {
-			return string(p[0:i])
-		}
-	}
-	return string(p)
-}
-
 //string to md5
 func String2MD5(code string) string {
 	h := md5.New()
@@ -27,12 +17,12 @@ func String2MD5(code string) string {
 	return rs
 }
 
-func MD5Verify(code string, md5Str string) bool{
+func MD5Verify(code string, md5Str string) bool {
 	return 0 == strings.Compare(String2MD5(code), md5Str)
 }
 
 //MD5 hash
-func MD5hash(str string) string{
+func MD5hash(str string) string {
 	return String2MD5(str)
 }
 
@@ -49,7 +39,7 @@ func AESPKCS7EncryptByte(plantText, key []byte) ([]byte, error) {
 	if err != nil {
 		return nil, err
 	}
-	plantText = PKCS7Padding(plantText, block.BlockSize())
+	plantText = pKCS7Padding(plantText, block.BlockSize())
 
 	blockModel := cipher.NewCBCEncrypter(block, key)
 
@@ -59,19 +49,12 @@ func AESPKCS7EncryptByte(plantText, key []byte) ([]byte, error) {
 	return cipherText, nil
 }
 
-func PKCS7Padding(cipherText []byte, blockSize int) []byte {
-	padding := blockSize - len(cipherText) % blockSize
-	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(cipherText, padtext...)
-}
-
 func AESPKCS7Decrypt(cipherText, key string) (string, error) {
 	result, err := AESPKCS7DecryptByte([]byte(cipherText), []byte(key))
 	str := byte2String(result)
-	return str ,err
+	return str, err
 }
 
-//AES Decrypt pkcs7padding CBC, key for choose algorithm
 func AESPKCS7DecryptByte(cipherText, key []byte) ([]byte, error) {
 	keyBytes := []byte(key)
 	block, err := aes.NewCipher(keyBytes)
@@ -81,12 +64,29 @@ func AESPKCS7DecryptByte(cipherText, key []byte) ([]byte, error) {
 	blockModel := cipher.NewCBCDecrypter(block, keyBytes)
 	plantText := make([]byte, len(cipherText))
 	blockModel.CryptBlocks(plantText, cipherText)
-	plantText = PKCS7UnPadding(plantText, block.BlockSize())
+	plantText = pKCS7UnPadding(plantText, block.BlockSize())
 	return plantText, nil
 }
 
-func PKCS7UnPadding(plantText []byte, blockSize int) []byte {
+//AES Decrypt pkcs7padding CBC, key for choose algorithm
+func pKCS7UnPadding(plantText []byte, blockSize int) []byte {
 	length := len(plantText)
 	unPadding := int(plantText[length - 1])
 	return plantText[:(length - unPadding)]
+}
+
+func pKCS7Padding(cipherText []byte, blockSize int) []byte {
+	padding := blockSize - len(cipherText) % blockSize
+	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(cipherText, padtext...)
+}
+
+// byte array to string
+func byte2String(p []byte) string {
+	for i := 0; i < len(p); i++ {
+		if p[i] == 0 {
+			return string(p[0:i])
+		}
+	}
+	return string(p)
 }
