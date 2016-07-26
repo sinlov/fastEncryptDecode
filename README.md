@@ -9,7 +9,7 @@ This is fast-encrypt-decode for golang uitls
 install
 
 ```sh
-go get github.com/sinlov/fastEncryptDecode
+go get -u -v github.com/sinlov/fastEncryptDecode
 ```
 
 ## import
