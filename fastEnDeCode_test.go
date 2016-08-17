@@ -31,18 +31,18 @@ func TestMD5Verify(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestAESPKCS7EncryptByte(t *testing.T) {
+func TestAES_PKCS7_EncryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkashkafhkfhkf"
-	enAES, err := AESPKCS7EncryptByte([]byte(str4AES), []byte(AES_KEY))
+	enAES, err := AES_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(enAES)
 	assert.Equal(t, nil, err)
 }
 
-func TestAESPKCS7DecryptByte(t *testing.T) {
+func TestAES_PKCS7_DecryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
-	enAES, err := AESPKCS7EncryptByte([]byte(str4AES), []byte(AES_KEY))
+	enAES, err := AES_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(byteString(enAES))
-	deAES, err := AESPKCS7DecryptByte(enAES, []byte(AES_KEY))
+	deAES, err := AES_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
 	fmt.Println(byteString(deAES))
 	assert.Equal(t, nil, err)
 }
@@ -56,17 +56,33 @@ func byteString(p []byte) string {
 	return string(p)
 }
 
-func TestAESPKCS7Encrypt(t *testing.T) {
+func TestAES_PKCS7_Encrypt(t *testing.T) {
 	str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
-	enAES, err := AESPKCS7Encrypt(str4AES, AES_KEY)
+	enAES, err := AES_PKCS7_Encrypt(str4AES, AES_KEY)
 	fmt.Println(enAES)
 	assert.Equal(t, nil, err)
 }
 
-func TestAESPKCS7Decrypt(t *testing.T) {
+func TestAES_PKCS7_Decrypt(t *testing.T) {
 	str4AES := "qwertasdgzxcv"
-	enAES, err := AESPKCS7Encrypt(str4AES, AES_KEY)
-	deASE, err := AESPKCS7Decrypt(enAES, AES_KEY)
+	enAES, err := AES_PKCS7_Encrypt(str4AES, AES_KEY)
+	deASE, err := AES_PKCS7_Decrypt(enAES, AES_KEY)
+	fmt.Println(enAES)
+	fmt.Println(deASE)
+	assert.Equal(t, nil, err)
+}
+
+func TestAES_ECB_PKCS5_Encrypt(t *testing.T) {
+	str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
+	enAES, err := AES_ECB_PKCS5_Encrypt(str4AES, AES_KEY)
+	fmt.Println(enAES)
+	assert.Equal(t, nil, err)
+}
+
+func TestAES_ECB_PKCS5_Decrypt(t *testing.T) {
+	str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
+	enAES, err := AES_ECB_PKCS5_Encrypt(str4AES, AES_KEY)
+	deASE, err := AES_ECB_PKCS5_Decrypt(enAES, AES_KEY)
 	fmt.Println(enAES)
 	fmt.Println(deASE)
 	assert.Equal(t, nil, err)

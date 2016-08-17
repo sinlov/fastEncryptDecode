@@ -45,11 +45,12 @@ this package use `pkcs7padding CBC` length `128byte` or string size `16`
 
 ```golang
     str4AES := "qwertasdgzxcv"
-    enAES, err := fastEncryptDecode.AESPKCS7Encrypt(str4AES, AES_KEY)
-    deASE, err := fastEncryptDecode.AESPKCS7Decrypt(enAES, AES_KEY)
+    enAES, err := fastEncryptDecode.AES_PKCS7_EncryptByte(str4AES, AES_KEY)
+    deASE, err := fastEncryptDecode.AES_PKCS7_DecryptByte(enAES, AES_KEY)
     fmt.Println(enAES)
     fmt.Println(deASE)
 ```
+
 
 - []byte
 
@@ -59,6 +60,16 @@ this package use `pkcs7padding CBC` length `128byte` or string size `16`
     deAES, err := fastEncryptDecode.AESPKCS7DecryptByte(enAES, []byte(AES_KEY))
 ```
 
+
+## AES ECB PKCS5 Encrypt
+
+```golang
+    str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
+	enAES, err := AES_ECB_PKCS5_Encrypt(str4AES, AES_KEY)
+	deASE, err := AES_ECB_PKCS5_Decrypt(enAES, AES_KEY)
+	fmt.Println(enAES)
+    fmt.Println(deASE)
+```
 
 #License
 
