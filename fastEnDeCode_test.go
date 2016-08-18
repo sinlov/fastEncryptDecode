@@ -76,6 +76,7 @@ func TestAES_ECB_PKCS5_Encrypt(t *testing.T) {
 	str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
 	enAES, err := AES_ECB_PKCS5_Encrypt(str4AES, AES_KEY)
 	fmt.Println(enAES)
+	fmt.Println("base64UrlSafe result:", Base64UrlSafeEncode([]byte(enAES)))
 	assert.Equal(t, nil, err)
 }
 

@@ -8,7 +8,6 @@ import (
 	"bytes"
 	"strings"
 	"encoding/base64"
-	"fmt"
 )
 
 type ecbEncrypter ecb
@@ -116,13 +115,16 @@ func AES_ECB_PKCS5_Encrypt(cipherText, key string) (string, error) {
 func AES_ECB_PKCS5_EncryptByte(cipherText, key []byte) ([]byte, error) {
 	keyBytes := []byte(key)
 	block, err := aes.NewCipher(keyBytes)
+	if err != nil {
+		return nil, err
+	}
 	ecb := newECBEncrypter(block)
 	content := cipherText
 	content = PKCS5Padding(content, block.BlockSize())
 	crypted := make([]byte, len(content))
 	ecb.CryptBlocks(crypted, content)
 	// 普通base64编码加密 区别于urlsafe base64
-	return crypted, err
+	return crypted, nil
 }
 
 func AES_ECB_PKCS5_Decrypt(cipherText, key string) (string, error) {
@@ -135,13 +137,13 @@ func AES_ECB_PKCS5_DecryptByte(cipherText, key []byte) ([]byte, error) {
 	keyBytes := []byte(key)
 	block, err := aes.NewCipher(keyBytes)
 	if err != nil {
-		fmt.Println("err is:", err)
+		return nil, err
 	}
 	blockMode := newECBDecrypter(block)
 	origData := make([]byte, len(cipherText))
 	blockMode.CryptBlocks(origData, cipherText)
 	origData = PKCS5UnPadding(origData)
-	return origData, err
+	return origData, nil
 }
 
 func Base64UrlSafeEncode(source []byte) string {
