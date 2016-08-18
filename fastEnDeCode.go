@@ -102,8 +102,8 @@ func pKCS7UnPadding(plantText []byte, blockSize int) []byte {
 
 func pKCS7Padding(cipherText []byte, blockSize int) []byte {
 	padding := blockSize - len(cipherText) % blockSize
-	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(cipherText, padtext...)
+	padText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(cipherText, padText...)
 }
 
 func AES_ECB_PKCS5_Encrypt(cipherText, key string) (string, error) {
@@ -155,10 +155,10 @@ func Base64UrlSafeEncode(source []byte) string {
 	return safeurl
 }
 
-func PKCS5Padding(ciphertext []byte, blockSize int) []byte {
-	padding := blockSize - len(ciphertext) % blockSize
-	padtext := bytes.Repeat([]byte{byte(padding)}, padding)
-	return append(ciphertext, padtext...)
+func PKCS5Padding(cipherText []byte, blockSize int) []byte {
+	padding := blockSize - len(cipherText) % blockSize
+	padText := bytes.Repeat([]byte{byte(padding)}, padding)
+	return append(cipherText, padText...)
 }
 
 func PKCS5UnPadding(origData []byte) []byte {
