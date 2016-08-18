@@ -71,6 +71,12 @@ this package use `pkcs7padding CBC` length `128byte` or string size `16`
     fmt.Println(deASE)
 ```
 
+## Base64UrlSafeEncode
+
+```golang
+fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
+```
+
 #License
 
 ---
