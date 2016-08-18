@@ -47,8 +47,11 @@ func MD5Verify(code string, md5Str string) bool {
 }
 
 //MD5 hash
-func MD5hash(str string) string {
-	return String2MD5(str)
+func MD5hash(code []byte) string {
+	h := md5.New()
+	h.Write(code)
+	rs := hex.EncodeToString(h.Sum(nil))
+	return rs
 }
 
 // AES encrypt pkcs7padding CBC, key for choose algorithm

@@ -23,23 +23,26 @@ import (
 
 ## MD5
 
+
+- MD5Hash
+
 ```golang
-    str4MD5 := "12345678"
-    enMD5:= fastEncryptDecode.String2MD5(str4MD5)
-    // or
-    str4MD51 := "0987654321"
-    enMD5:= fastEncryptDecode.MD5hash(str4MD51)
+    str4MD5 := "0987654321"
+	enMD5 := MD5hash([]byte(str4MD5))
+	// if string
+	enMD5 := String2MD5(str4MD5)
 ```
+
 
 - MD5 Verify
 
 ```golang
-    MD5Verify(str4MD5, "25d55ad283aa400af464c761d713c07a")
+    verifyTrue := MD5Verify(str4MD5, "25d55ad283aa400af464c761d713c07a")
 ```
 
 ## AES 
 
-this package use `pkcs7padding CBC` length `128byte` or string size `16`
+this package use `CBC pkcs7 padding` length `128byte` or string size `16`
 
 - string
 
@@ -47,8 +50,6 @@ this package use `pkcs7padding CBC` length `128byte` or string size `16`
     str4AES := "qwertasdgzxcv"
     enAES, err := fastEncryptDecode.AES_CBC_PKCS7_Encrypt(str4AES, AES_KEY)
     deASE, err := fastEncryptDecode.AES_CBC_PKCS7_Decrypt(enAES, AES_KEY)
-    fmt.Println(enAES)
-    fmt.Println(deASE)
 ```
 
 
@@ -56,19 +57,29 @@ this package use `pkcs7padding CBC` length `128byte` or string size `16`
 
 ```golang
     str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfh"
-    enAES, err := fastEncryptDecode.AES_CBC_PKCS7_Encrypt([]byte(str4AES), []byte(AES_KEY))
+    enAES, err := fastEncryptDecode.AES_CBC_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
     deAES, err := fastEncryptDecode.AES_CBC_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
 ```
 
 
 ## AES ECB PKCS5 Encrypt
 
+this package use `ECB pkcs5 padding` length `128byte` or string size `16`
+
+- string
+
 ```golang
     str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
 	enAES, err := AES_ECB_PKCS5_Encrypt(str4AES, AES_KEY)
 	deASE, err := AES_ECB_PKCS5_Decrypt(enAES, AES_KEY)
-	fmt.Println(enAES)
-    fmt.Println(deASE)
+```
+
+- []byte
+
+```golang
+    str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
+	enAES, err := AES_ECB_PKCS5_EncryptByte([]byte(str4AES), []byte(AES_KEY))
+	deAES, err := AES_ECB_PKCS5_DecryptByte(enAES, []byte(AES_KEY))
 ```
 
 ## Base64UrlSafeEncode

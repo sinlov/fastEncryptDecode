@@ -17,6 +17,14 @@ func byteString(p []byte) string {
 	return string(p)
 }
 
+func TestMD5hash(t *testing.T) {
+	fmt.Println("\n" + "TestMD5hash")
+	str4MD5 := "0987654321"
+	enMD5 := MD5hash([]byte(str4MD5))
+	fmt.Println(str4MD5, enMD5)
+	assert.Equal(t, nil, nil)
+}
+
 func TestString2MD5(t *testing.T) {
 	fmt.Println("\n" + "TestString2MD5")
 	str4MD5 := "12345678"
@@ -25,21 +33,16 @@ func TestString2MD5(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestMD5hash(t *testing.T) {
-	fmt.Println("\n" + "TestMD5hash")
-	str4MD5 := "0987654321"
-	enMD5 := MD5hash(str4MD5)
-	fmt.Println(str4MD5, enMD5)
-	assert.Equal(t, nil, nil)
-}
-
 func TestMD5Verify(t *testing.T) {
 	fmt.Println("\n" + "TestMD5Verify")
 	str4MD5 := "12345678"
 	enMD5 := String2MD5(str4MD5)
-	fmt.Println(str4MD5, enMD5 ,MD5Verify(str4MD5, enMD5))
-	fmt.Println(str4MD5, "25d55ad283aa400af464c76d713c07a", MD5Verify(str4MD5, "25d55ad283aa400af464c76d713c07a"))
-	assert.Equal(t, nil, nil)
+	verifyTrue := MD5Verify(str4MD5, enMD5)
+	fmt.Println(str4MD5, enMD5 , verifyTrue)
+	verifyFalse := MD5Verify(str4MD5, "25d55ad283aa400af464c76d713c07a")
+	fmt.Println(str4MD5, "25d55ad283aa400af464c76d713c07a", verifyFalse)
+	tBool := verifyTrue && !verifyFalse
+	assert.T(t, tBool, nil)
 }
 
 func TestAES_CBC_PKCS7_EncryptByte(t *testing.T) {
@@ -59,8 +62,9 @@ func TestAES_CBC_PKCS7_DecryptByte(t *testing.T) {
 	fmt.Println(byteString(enAES))
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
 	deAES, err := AES_CBC_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
-	fmt.Println(byteString(deAES))
-	assert.Equal(t, nil, err)
+	pStr := byteString(deAES)
+	fmt.Println(pStr)
+	assert.Equal(t, str4AES, pStr, err)
 }
 
 func TestAES_CBC_PKCS7_Encrypt(t *testing.T) {
@@ -82,7 +86,7 @@ func TestAES_CBC_PKCS7_Decrypt(t *testing.T) {
 	fmt.Println(enAES)
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode([]byte(enAES)))
 	fmt.Println(deASE)
-	assert.Equal(t, nil, err)
+	assert.Equal(t, str4AES, deASE, err)
 }
 
 func TestAES_ECB_PKCS5_Encrypt(t *testing.T) {
@@ -104,7 +108,7 @@ func TestAES_ECB_PKCS5_Decrypt(t *testing.T) {
 	fmt.Println(enAES)
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode([]byte(enAES)))
 	fmt.Println(deASE)
-	assert.Equal(t, nil, err)
+	assert.Equal(t, str4AES, deASE, err)
 }
 
 func TestAES_ECB_PKCS5_EncryptByte(t *testing.T) {
@@ -124,7 +128,8 @@ func TestAES_ECB_PKCS5_DecryptByte(t *testing.T) {
 	fmt.Println(str4AES)
 	fmt.Println(byteString(enAES))
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
-	deAES, err := AES_CBC_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
-	fmt.Println(byteString(deAES))
-	assert.Equal(t, nil, err)
+	deAES, err := AES_ECB_PKCS5_DecryptByte(enAES, []byte(AES_KEY))
+	pStr := byteString(deAES)
+	fmt.Println(pStr)
+	assert.Equal(t, str4AES, pStr, err)
 }
