@@ -53,14 +53,14 @@ func MD5hash(str string) string {
 }
 
 // AES encrypt pkcs7padding CBC, key for choose algorithm
-func AES_PKCS7_Encrypt(plantText, key string) (string, error) {
-	res, err := AES_PKCS7_EncryptByte([]byte(plantText), []byte(key))
+func AES_CBC_PKCS7_Encrypt(plantText, key string) (string, error) {
+	res, err := AES_CBC_PKCS7_EncryptByte([]byte(plantText), []byte(key))
 	return byte2String(res), err
 }
 
 
 // AES encrypt pkcs7padding CBC, key for choose algorithm
-func AES_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
+func AES_CBC_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -75,13 +75,13 @@ func AES_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
 	return cipherText, nil
 }
 
-func AES_PKCS7_Decrypt(cipherText, key string) (string, error) {
-	result, err := AES_PKCS7_DecryptByte([]byte(cipherText), []byte(key))
+func AES_CBC_PKCS7_Decrypt(cipherText, key string) (string, error) {
+	result, err := AES_CBC_PKCS7_DecryptByte([]byte(cipherText), []byte(key))
 	str := byte2String(result)
 	return str, err
 }
 
-func AES_PKCS7_DecryptByte(cipherText, key []byte) ([]byte, error) {
+func AES_CBC_PKCS7_DecryptByte(cipherText, key []byte) ([]byte, error) {
 	keyBytes := []byte(key)
 	block, err := aes.NewCipher(keyBytes)
 	if err != nil {

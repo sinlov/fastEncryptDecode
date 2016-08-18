@@ -31,18 +31,18 @@ func TestMD5Verify(t *testing.T) {
 	assert.Equal(t, nil, nil)
 }
 
-func TestAES_PKCS7_EncryptByte(t *testing.T) {
+func TestAES_CBC_PKCS7_EncryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkashkafhkfhkf"
-	enAES, err := AES_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
+	enAES, err := AES_CBC_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(enAES)
 	assert.Equal(t, nil, err)
 }
 
-func TestAES_PKCS7_DecryptByte(t *testing.T) {
+func TestAES_CBC_PKCS7_DecryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
-	enAES, err := AES_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
+	enAES, err := AES_CBC_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(byteString(enAES))
-	deAES, err := AES_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
+	deAES, err := AES_CBC_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
 	fmt.Println(byteString(deAES))
 	assert.Equal(t, nil, err)
 }
@@ -56,17 +56,17 @@ func byteString(p []byte) string {
 	return string(p)
 }
 
-func TestAES_PKCS7_Encrypt(t *testing.T) {
+func TestAES_CBC_PKCS7_Encrypt(t *testing.T) {
 	str4AES := "qwer1234adasdadadasdadaasadashkafhkfhkf"
-	enAES, err := AES_PKCS7_Encrypt(str4AES, AES_KEY)
+	enAES, err := AES_CBC_PKCS7_Encrypt(str4AES, AES_KEY)
 	fmt.Println(enAES)
 	assert.Equal(t, nil, err)
 }
 
-func TestAES_PKCS7_Decrypt(t *testing.T) {
+func TestAES_CBC_PKCS7_Decrypt(t *testing.T) {
 	str4AES := "qwertasdgzxcv"
-	enAES, err := AES_PKCS7_Encrypt(str4AES, AES_KEY)
-	deASE, err := AES_PKCS7_Decrypt(enAES, AES_KEY)
+	enAES, err := AES_CBC_PKCS7_Encrypt(str4AES, AES_KEY)
+	deASE, err := AES_CBC_PKCS7_Decrypt(enAES, AES_KEY)
 	fmt.Println(enAES)
 	fmt.Println(deASE)
 	assert.Equal(t, nil, err)
