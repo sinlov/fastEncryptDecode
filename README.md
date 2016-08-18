@@ -40,7 +40,7 @@ import (
     verifyTrue := MD5Verify(str4MD5, "25d55ad283aa400af464c761d713c07a")
 ```
 
-## AES 
+## AES CBC PKCS7
 
 this package use `CBC pkcs7 padding` length `128byte` or string size `16`
 
@@ -62,7 +62,7 @@ this package use `CBC pkcs7 padding` length `128byte` or string size `16`
 ```
 
 
-## AES ECB PKCS5 Encrypt
+## AES ECB PKCS5
 
 this package use `ECB pkcs5 padding` length `128byte` or string size `16`
 
@@ -83,6 +83,8 @@ this package use `ECB pkcs5 padding` length `128byte` or string size `16`
 ```
 
 ## Base64UrlSafeEncode
+
+for encode by `AES_CBC_PKCS7_Encrypt` or `AES_ECB_PKCS5_Encrypt` result
 
 ```golang
 fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
