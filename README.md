@@ -21,6 +21,16 @@ import (
 ```
 
 
+## Utf8 and Unicode
+
+```golang
+    bStr := "转换前的中文"
+	enUnicode := Utf82Unicode(bStr)
+	enUtf8 := Unicode2Utf8(enUnicode)
+	fmt.Println(bStr, enUnicode, enUtf8)
+```
+
+
 ## MD5
 
 

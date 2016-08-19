@@ -8,6 +8,8 @@ import (
 	"bytes"
 	"strings"
 	"encoding/base64"
+	"strconv"
+	"fmt"
 )
 
 type ecbEncrypter ecb
@@ -25,13 +27,35 @@ func newECB(b cipher.Block) *ecb {
 }
 
 // byte array to string
-func byte2String(p []byte) string {
+func ByteArr2String(p []byte) string {
 	for i := 0; i < len(p); i++ {
 		if p[i] == 0 {
 			return string(p[0:i])
 		}
 	}
 	return string(p)
+}
+
+func Utf82Unicode(code string) string {
+	cover := strconv.QuoteToASCII(code);
+	res := cover[1 : len(cover) - 1]
+	return res
+}
+
+func Unicode2Utf8(code string) string {
+	unicodeTemp := strings.Split(code, "\\u")
+	var context string
+	for _, v := range unicodeTemp {
+		if len(v) < 1 {
+			continue
+		}
+		temp, err := strconv.ParseInt(v, 16, 32)
+		if err != nil {
+			panic(err)
+		}
+		context += fmt.Sprintf("%c", temp)
+	}
+	return context
 }
 
 //string to md5
@@ -57,7 +81,7 @@ func MD5hash(code []byte) string {
 // AES encrypt pkcs7padding CBC, key for choose algorithm
 func AES_CBC_PKCS7_Encrypt(plantText, key string) (string, error) {
 	res, err := AES_CBC_PKCS7_EncryptByte([]byte(plantText), []byte(key))
-	return byte2String(res), err
+	return ByteArr2String(res), err
 }
 
 
@@ -79,7 +103,7 @@ func AES_CBC_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
 
 func AES_CBC_PKCS7_Decrypt(cipherText, key string) (string, error) {
 	result, err := AES_CBC_PKCS7_DecryptByte([]byte(cipherText), []byte(key))
-	str := byte2String(result)
+	str := ByteArr2String(result)
 	return str, err
 }
 
@@ -111,7 +135,7 @@ func pKCS7Padding(cipherText []byte, blockSize int) []byte {
 
 func AES_ECB_PKCS5_Encrypt(cipherText, key string) (string, error) {
 	result, err := AES_ECB_PKCS5_EncryptByte([]byte(cipherText), []byte(key))
-	str := byte2String(result)
+	str := ByteArr2String(result)
 	return str, err
 }
 
@@ -132,7 +156,7 @@ func AES_ECB_PKCS5_EncryptByte(cipherText, key []byte) ([]byte, error) {
 
 func AES_ECB_PKCS5_Decrypt(cipherText, key string) (string, error) {
 	result, err := AES_ECB_PKCS5_DecryptByte([]byte(cipherText), []byte(key))
-	str := byte2String(result)
+	str := ByteArr2String(result)
 	return str, err
 }
 
