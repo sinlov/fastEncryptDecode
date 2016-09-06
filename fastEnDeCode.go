@@ -27,13 +27,57 @@ func newECB(b cipher.Block) *ecb {
 }
 
 // byte array to string
-func ByteArr2String(p []byte) string {
+func ByteArr2Str(p []byte) string {
 	for i := 0; i < len(p); i++ {
 		if p[i] == 0 {
 			return string(p[0:i])
 		}
 	}
 	return string(p)
+}
+
+func ByteArr2HexStr(bArr []byte) string {
+	buf := new(bytes.Buffer)
+	for _, b := range bArr {
+		s := strconv.FormatInt(int64(b & 0xff), 16)
+		if len(s) == 1 {
+			buf.WriteString("0")
+		}
+		buf.WriteString(s)
+	}
+	return buf.String()
+}
+
+func ByteArr2HexStrArr(bArr []byte) []string {
+	length := len(bArr)
+	slice := make([]string, length)
+	buf := new(bytes.Buffer)
+	for i := 0; i < length; i++ {
+		buf.Reset()
+		buf.WriteString("0x")
+		s := strconv.FormatInt(int64(bArr[i] & 0xff), 16)
+		if len(s) == 1 {
+			buf.WriteString("0")
+		}
+		buf.WriteString(s)
+		slice[i] = buf.String()
+	}
+	return slice
+}
+
+func HexStr2ByteArr(hexString string) ([]byte, error) {
+	length := len(hexString) / 2
+	slice := make([]byte, length)
+	rs := []rune(hexString)
+	for i := 0; i < length; i++ {
+		s := string(rs[i * 2 : i * 2 + 2])
+		value, err := strconv.ParseInt(s, 16, 10)
+		if err != nil {
+			return nil, err
+		}
+		slice[i] = byte(value & 0xFF)
+	}
+	return slice, nil
 }
 
 func Utf82Unicode(code string) string {
@@ -81,7 +125,7 @@ func MD5hash(code []byte) string {
 // AES encrypt pkcs7padding CBC, key for choose algorithm
 func AES_CBC_PKCS7_Encrypt(plantText, key string) (string, error) {
 	res, err := AES_CBC_PKCS7_EncryptByte([]byte(plantText), []byte(key))
-	return ByteArr2String(res), err
+	return ByteArr2Str(res), err
 }
 
 
@@ -103,7 +147,7 @@ func AES_CBC_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
 
 func AES_CBC_PKCS7_Decrypt(cipherText, key string) (string, error) {
 	result, err := AES_CBC_PKCS7_DecryptByte([]byte(cipherText), []byte(key))
-	str := ByteArr2String(result)
+	str := ByteArr2Str(result)
 	return str, err
 }
 
@@ -135,7 +179,7 @@ func pKCS7Padding(cipherText []byte, blockSize int) []byte {
 
 func AES_ECB_PKCS5_Encrypt(cipherText, key string) (string, error) {
 	result, err := AES_ECB_PKCS5_EncryptByte([]byte(cipherText), []byte(key))
-	str := ByteArr2String(result)
+	str := ByteArr2Str(result)
 	return str, err
 }
 
@@ -156,7 +200,7 @@ func AES_ECB_PKCS5_EncryptByte(cipherText, key []byte) ([]byte, error) {
 
 func AES_ECB_PKCS5_Decrypt(cipherText, key string) (string, error) {
 	result, err := AES_ECB_PKCS5_DecryptByte([]byte(cipherText), []byte(key))
-	str := ByteArr2String(result)
+	str := ByteArr2Str(result)
 	return str, err
 }
 

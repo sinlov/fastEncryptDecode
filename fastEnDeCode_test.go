@@ -8,6 +8,43 @@ import (
 
 const AES_KEY string = "qwerty1234567890"
 
+func TestByteArr2HexStr(t *testing.T) {
+	fmt.Println("\nTestByteArr2HexStr")
+	str4Hex := "12345qwert"
+	fmt.Println("str4Hex", str4Hex)
+	hexStr := []byte(str4Hex)
+	fmt.Println("hexStr", hexStr)
+	hexString := ByteArr2HexStr(hexStr)
+	fmt.Println("ByteArr2HexString", hexString)
+	assert.Equal(t, nil, nil)
+}
+
+func TestByteArr2HexStrArr(t *testing.T) {
+	fmt.Println("\nTestByteArr2HexStrArr")
+	str4Hex := "12345qwert"
+	fmt.Println("str4Hex", str4Hex)
+	hexStr := []byte(str4Hex)
+	fmt.Println("hexStr", hexStr)
+	hexStrArr := ByteArr2HexStrArr(hexStr)
+	for _, s := range hexStrArr {
+		fmt.Println("ByteArr2HexStrArr: ", s)
+	}
+	assert.Equal(t, nil, nil)
+}
+
+func TestHexStr2ByteArr(t *testing.T) {
+	fmt.Println("\nTestHexStr2ByteArr")
+	str4Hex := "12345qwert"
+	fmt.Println("str4Hex", str4Hex)
+	hexStr := []byte(str4Hex)
+	fmt.Println("hexStr", hexStr)
+	hexString := ByteArr2HexStr(hexStr)
+	fmt.Println("ByteArr2HexStr", hexString)
+	byteArr, err := HexStr2ByteArr(hexString)
+	fmt.Println("byteArr", byteArr)
+	assert.Equal(t, hexStr, byteArr, err)
+}
+
 func TestUtf82Unicode(t *testing.T) {
 	fmt.Println("\n" + "TestUtf82Unicode")
 	bStr := "转换前的中文"
@@ -67,10 +104,10 @@ func TestAES_CBC_PKCS7_DecryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
 	enAES, err := AES_CBC_PKCS7_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(str4AES)
-	fmt.Println(ByteArr2String(enAES))
+	fmt.Println(ByteArr2Str(enAES))
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
 	deAES, err := AES_CBC_PKCS7_DecryptByte(enAES, []byte(AES_KEY))
-	pStr := ByteArr2String(deAES)
+	pStr := ByteArr2Str(deAES)
 	fmt.Println(pStr)
 	assert.Equal(t, str4AES, pStr, err)
 }
@@ -124,7 +161,7 @@ func TestAES_ECB_PKCS5_EncryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
 	enAES, err := AES_ECB_PKCS5_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(str4AES)
-	fmt.Println(ByteArr2String(enAES))
+	fmt.Println(ByteArr2Str(enAES))
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
 	assert.Equal(t, nil, err)
 }
@@ -134,10 +171,10 @@ func TestAES_ECB_PKCS5_DecryptByte(t *testing.T) {
 	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
 	enAES, err := AES_ECB_PKCS5_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	fmt.Println(str4AES)
-	fmt.Println(ByteArr2String(enAES))
+	fmt.Println(ByteArr2Str(enAES))
 	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
 	deAES, err := AES_ECB_PKCS5_DecryptByte(enAES, []byte(AES_KEY))
-	pStr := ByteArr2String(deAES)
+	pStr := ByteArr2Str(deAES)
 	fmt.Println(pStr)
 	assert.Equal(t, str4AES, pStr, err)
 }

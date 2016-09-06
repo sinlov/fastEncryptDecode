@@ -21,6 +21,25 @@ import (
 ```
 
 
+## byte array And String
+
+```golang
+    // Byte arrary to String
+    pStr := ByteArr2Str(deAES)
+    
+    // byte arrary to hex string
+    hexString := ByteArr2HexStr(hexStr)
+    
+    // byte arrary to hex string arrary
+    hexStrArr := ByteArr2HexStrArr(hexStr)
+    for _, s := range hexStrArr {
+    		fmt.Println("ByteArr2HexStrArr: ", s)
+    }
+    
+    // hex string to byte arrary
+    byteArr, err := HexStr2ByteArr(hexString)
+```
+
 ## Utf8 and Unicode
 
 ```golang
@@ -48,6 +67,14 @@ import (
 
 ```golang
     verifyTrue := MD5Verify(str4MD5, "25d55ad283aa400af464c761d713c07a")
+```
+
+## Base64UrlSafeEncode
+
+for encode by `Base64 Safe encode`
+
+```golang
+fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
 ```
 
 ## AES CBC PKCS7
@@ -90,14 +117,6 @@ this package use `ECB pkcs5 padding` length `128byte` or string size `16`
     str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
 	enAES, err := AES_ECB_PKCS5_EncryptByte([]byte(str4AES), []byte(AES_KEY))
 	deAES, err := AES_ECB_PKCS5_DecryptByte(enAES, []byte(AES_KEY))
-```
-
-## Base64UrlSafeEncode
-
-for encode by `AES_CBC_PKCS7_Encrypt` or `AES_ECB_PKCS5_Encrypt` result
-
-```golang
-fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
 ```
 
 #License
