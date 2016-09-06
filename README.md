@@ -40,6 +40,25 @@ import (
     byteArr, err := HexStr2ByteArr(hexString)
 ```
 
+## byte and uint
+
+```golang
+    // byte to uint8
+    b := 0x13
+    i := uint8(b)
+    
+    // uint8 to byte
+    var i uint8
+    i = 3
+    b := byte(i)
+    
+    // byte[] to uint 16 32 64 use | package encoding/binary
+    uNumber := binary.BigEndian.Uint16(data[12 : 36])
+```
+
+- You must check len at []byte for support
+- more info see [fastEnDeCode_test.go] at method `TestByteAndUint`
+
 ## Utf8 and Unicode
 
 ```golang

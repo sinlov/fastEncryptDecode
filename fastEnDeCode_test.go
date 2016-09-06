@@ -4,6 +4,8 @@ import (
 	"testing"
 	"github.com/bmizerany/assert"
 	"fmt"
+	"encoding/binary"
+	"unsafe"
 )
 
 const AES_KEY string = "qwerty1234567890"
@@ -43,6 +45,36 @@ func TestHexStr2ByteArr(t *testing.T) {
 	byteArr, err := HexStr2ByteArr(hexString)
 	fmt.Println("byteArr", byteArr)
 	assert.Equal(t, hexStr, byteArr, err)
+}
+
+func TestByteAndUint(t *testing.T) {
+	fmt.Println("\nTestByteAndUint")
+	// byte to uint8
+	b := 0x13
+	i := uint8(b)
+	fmt.Println("byte: ", b, " uint8: ", i)
+	// uint8 to byte
+	var i4T uint8
+	i4T = 3
+	b4T := byte(i4T)
+	fmt.Println("uint8: ", i4T, " byte: ", b4T)
+	// byte[] to uint 16 32 64 use | package encoding/binary
+	dataUint16 := []byte{0x12, 0x24}
+	fmt.Println("dataUint16: ", len(dataUint16))
+	uUint16 := binary.BigEndian.Uint16(dataUint16)
+	fmt.Println("uUint16:", unsafe.Sizeof(uUint16))
+	fmt.Println("byte arrar: ", dataUint16, " Uint16: ", uUint16)
+	dataUint32 := []byte{0x12, 0x24, 0x36, 0x48}
+	fmt.Println("dataUint32: ", len(dataUint32))
+	uUint32 := binary.BigEndian.Uint32(dataUint32)
+	fmt.Println("uUint32: ", unsafe.Sizeof(uUint32))
+	fmt.Println("byte arrar: ", dataUint32, " Uint32: ", uUint32)
+	dataUint64 := []byte{0x12, 0x24, 0x36, 0x48, 0x51, 0x62, 0x73, 0x74}
+	fmt.Println("dataUint64: ", len(dataUint64))
+	uUint64 := binary.BigEndian.Uint64(dataUint64)
+	fmt.Println("uUint64: ", unsafe.Sizeof(uUint64))
+	fmt.Println("byte arrar: ", dataUint64, " uUint64: ", uUint64)
+	assert.Equal(t, nil, nil)
 }
 
 func TestUtf82Unicode(t *testing.T) {
