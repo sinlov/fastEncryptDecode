@@ -57,7 +57,7 @@ import (
 ```
 
 - You must check len at []byte for support
-- more info see [func TestByteAndUint](https://github.com/sinlov/fastEncryptDecode/blob/master/fastEnDeCode.go#L50) at method `TestByteAndUint`
+- more info see [func TestByteAndUint](https://github.com/sinlov/fastEncryptDecode/blob/master/fastEnDeCode_test.go#L50) at method `TestByteAndUint`
 
 ## Utf8 and Unicode
 
