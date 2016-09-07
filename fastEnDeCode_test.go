@@ -91,7 +91,7 @@ func TestUnicode2Utf8(t *testing.T) {
 	enUnicode := Utf82Unicode(bStr)
 	enUtf8 := Unicode2Utf8(enUnicode)
 	fmt.Println(bStr, enUnicode, enUtf8)
-	assert.Equal(t, nil, nil)
+	assert.Equal(t, bStr, enUtf8, nil)
 }
 
 func TestMD5hash(t *testing.T) {
@@ -190,11 +190,11 @@ func TestAES_ECB_PKCS5_Decrypt(t *testing.T) {
 
 func TestAES_ECB_PKCS5_EncryptByte(t *testing.T) {
 	fmt.Println("\n" + "TestAES_ECB_PKCS5_EncryptByte")
-	str4AES := "qwer1234aisudfhsfhsidhaskfahfahkufahukfhkadadasdadadasdadaasadashkafhkfhkf"
-	enAES, err := AES_ECB_PKCS5_EncryptByte([]byte(str4AES), []byte(AES_KEY))
+	str4AES := "{\"data\":null,\"msg\":\"提交的数据为空!\",\"status\":0}"
+	enAES, err := AES_ECB_PKCS5_EncryptByte([]byte(str4AES), []byte("gf*#&1&(g*UjX!h*"))
 	fmt.Println(str4AES)
 	fmt.Println(ByteArr2Str(enAES))
-	fmt.Println("base64UrlSafe: ", Base64UrlSafeEncode(enAES))
+	fmt.Println("base64UrlSafe: ", ByteArr2HexStr(enAES))
 	assert.Equal(t, nil, err)
 }
 
