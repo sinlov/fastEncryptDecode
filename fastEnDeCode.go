@@ -15,7 +15,7 @@ import (
 type KeySizeError int
 
 func (k KeySizeError) Error() string {
-	return "fastEncryptDecode/fastEnDeCode: invalid key size " + strconv.Itoa(int(k))
+	return "fastEncryptDecode/fastEnDeCode: invalid key size " + strconv.Itoa(int(k)) + "must be size 16"
 }
 
 type ecbEncrypter ecb
