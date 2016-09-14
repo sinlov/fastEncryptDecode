@@ -12,6 +12,12 @@ import (
 	"fmt"
 )
 
+type KeySizeError int
+
+func (k KeySizeError) Error() string {
+	return "fastEncryptDecode/fastEnDeCode: invalid key size " + strconv.Itoa(int(k))
+}
+
 type ecbEncrypter ecb
 
 type ecb struct {
@@ -122,6 +128,14 @@ func MD5hash(code []byte) string {
 	return rs
 }
 
+func checkKeySize(key []byte) error {
+	len := len(key)
+	if len != 16 {
+		return KeySizeError(len)
+	}
+	return nil
+}
+
 // AES encrypt pkcs7padding CBC, key for choose algorithm
 func AES_CBC_PKCS7_Encrypt(plantText, key string) (string, error) {
 	res, err := AES_CBC_PKCS7_EncryptByte([]byte(plantText), []byte(key))
@@ -131,6 +145,10 @@ func AES_CBC_PKCS7_Encrypt(plantText, key string) (string, error) {
 
 // AES encrypt pkcs7padding CBC, key for choose algorithm
 func AES_CBC_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
+	err := checkKeySize(key)
+	if err != nil {
+		return nil, err
+	}
 	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
@@ -152,6 +170,10 @@ func AES_CBC_PKCS7_Decrypt(cipherText, key string) (string, error) {
 }
 
 func AES_CBC_PKCS7_DecryptByte(cipherText, key []byte) ([]byte, error) {
+	err := checkKeySize(key)
+	if err != nil {
+		return nil, err
+	}
 	keyBytes := []byte(key)
 	block, err := aes.NewCipher(keyBytes)
 	if err != nil {
@@ -184,8 +206,11 @@ func AES_ECB_PKCS5_Encrypt(cipherText, key string) (string, error) {
 }
 
 func AES_ECB_PKCS5_EncryptByte(cipherText, key []byte) ([]byte, error) {
-	keyBytes := []byte(key)
-	block, err := aes.NewCipher(keyBytes)
+	err := checkKeySize(key)
+	if err != nil {
+		return nil, err
+	}
+	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
@@ -205,8 +230,12 @@ func AES_ECB_PKCS5_Decrypt(cipherText, key string) (string, error) {
 }
 
 func AES_ECB_PKCS5_DecryptByte(cipherText, key []byte) ([]byte, error) {
-	keyBytes := []byte(key)
-	block, err := aes.NewCipher(keyBytes)
+	err := checkKeySize(key)
+	if err != nil {
+		return nil, err
+
+	}
+	block, err := aes.NewCipher(key)
 	if err != nil {
 		return nil, err
 	}
