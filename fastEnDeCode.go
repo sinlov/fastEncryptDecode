@@ -1,15 +1,15 @@
 package fastEncryptDecode
 
 import (
-	"crypto/md5"
-	"encoding/hex"
+	"bytes"
 	"crypto/aes"
 	"crypto/cipher"
-	"bytes"
-	"strings"
+	"crypto/md5"
 	"encoding/base64"
-	"strconv"
+	"encoding/hex"
 	"fmt"
+	"strconv"
+	"strings"
 )
 
 type KeySizeError int
@@ -45,13 +45,42 @@ func ByteArr2Str(p []byte) string {
 func ByteArr2HexStr(bArr []byte) string {
 	buf := new(bytes.Buffer)
 	for _, b := range bArr {
-		s := strconv.FormatInt(int64(b & 0xff), 16)
+		s := strconv.FormatInt(int64(b&0xff), 16)
 		if len(s) == 1 {
 			buf.WriteString("0")
 		}
 		buf.WriteString(s)
 	}
 	return buf.String()
+}
+
+func Uint16ToBytes(n uint16) []byte {
+	return []byte{
+		byte(n),
+		byte(n >> 8),
+	}
+}
+
+func Uint32ToBytes(n uint32) []byte {
+	return []byte{
+		byte(n),
+		byte(n >> 8),
+		byte(n >> 16),
+		byte(n >> 24),
+	}
+}
+
+func Uint64ToBytes(n uint64) []byte {
+	return []byte{
+		byte(n),
+		byte(n >> 8),
+		byte(n >> 16),
+		byte(n >> 24),
+		byte(n >> 32),
+		byte(n >> 40),
+		byte(n >> 48),
+		byte(n >> 56),
+	}
 }
 
 func ByteArr2HexStrArr(bArr []byte) []string {
@@ -61,7 +90,7 @@ func ByteArr2HexStrArr(bArr []byte) []string {
 	for i := 0; i < length; i++ {
 		buf.Reset()
 		buf.WriteString("0x")
-		s := strconv.FormatInt(int64(bArr[i] & 0xff), 16)
+		s := strconv.FormatInt(int64(bArr[i]&0xff), 16)
 		if len(s) == 1 {
 			buf.WriteString("0")
 		}
@@ -76,7 +105,7 @@ func HexStr2ByteArr(hexString string) ([]byte, error) {
 	slice := make([]byte, length)
 	rs := []rune(hexString)
 	for i := 0; i < length; i++ {
-		s := string(rs[i * 2 : i * 2 + 2])
+		s := string(rs[i*2 : i*2+2])
 		value, err := strconv.ParseInt(s, 16, 10)
 		if err != nil {
 			return nil, err
@@ -87,8 +116,8 @@ func HexStr2ByteArr(hexString string) ([]byte, error) {
 }
 
 func Utf82Unicode(code string) string {
-	cover := strconv.QuoteToASCII(code);
-	res := cover[1 : len(cover) - 1]
+	cover := strconv.QuoteToASCII(code)
+	res := cover[1 : len(cover)-1]
 	return res
 }
 
@@ -142,7 +171,6 @@ func AES_CBC_PKCS7_Encrypt(plantText, key string) (string, error) {
 	return ByteArr2Str(res), err
 }
 
-
 // AES encrypt pkcs7padding CBC, key for choose algorithm
 func AES_CBC_PKCS7_EncryptByte(plantText, key []byte) ([]byte, error) {
 	err := checkKeySize(key)
@@ -189,12 +217,12 @@ func AES_CBC_PKCS7_DecryptByte(cipherText, key []byte) ([]byte, error) {
 //AES Decrypt pkcs7padding CBC, key for choose algorithm
 func pKCS7UnPadding(plantText []byte, blockSize int) []byte {
 	length := len(plantText)
-	unPadding := int(plantText[length - 1])
+	unPadding := int(plantText[length-1])
 	return plantText[:(length - unPadding)]
 }
 
 func pKCS7Padding(cipherText []byte, blockSize int) []byte {
-	padding := blockSize - len(cipherText) % blockSize
+	padding := blockSize - len(cipherText)%blockSize
 	padText := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(cipherText, padText...)
 }
@@ -256,7 +284,7 @@ func Base64UrlSafeEncode(source []byte) string {
 }
 
 func PKCS5Padding(cipherText []byte, blockSize int) []byte {
-	padding := blockSize - len(cipherText) % blockSize
+	padding := blockSize - len(cipherText)%blockSize
 	padText := bytes.Repeat([]byte{byte(padding)}, padding)
 	return append(cipherText, padText...)
 }
@@ -264,7 +292,7 @@ func PKCS5Padding(cipherText []byte, blockSize int) []byte {
 func PKCS5UnPadding(origData []byte) []byte {
 	length := len(origData)
 	// 去掉最后一个字节 unpadding 次
-	unpadding := int(origData[length - 1])
+	unpadding := int(origData[length-1])
 	return origData[:(length - unpadding)]
 }
 
@@ -277,7 +305,7 @@ func (x *ecbEncrypter) BlockSize() int {
 	return x.blockSize
 }
 func (x *ecbEncrypter) CryptBlocks(dst, src []byte) {
-	if len(src) % x.blockSize != 0 {
+	if len(src)%x.blockSize != 0 {
 		panic("crypto/cipher: input not full blocks")
 	}
 	if len(dst) < len(src) {
@@ -301,7 +329,7 @@ func (x *ecbDecrypter) BlockSize() int {
 	return x.blockSize
 }
 func (x *ecbDecrypter) CryptBlocks(dst, src []byte) {
-	if len(src) % x.blockSize != 0 {
+	if len(src)%x.blockSize != 0 {
 		panic("crypto/cipher: input not full blocks")
 	}
 	if len(dst) < len(src) {
