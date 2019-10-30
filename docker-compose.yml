@@ -1,0 +1,25 @@
+# copy right
+# Licenses http://www.apache.org/licenses/LICENSE-2.0
+# more info see https://docs.docker.com/compose/compose-file/ or https://docker.github.io/compose/compose-file/
+version: '3.7'
+
+networks:
+  default:
+#volumes:
+#  web-data:
+services:
+  fastEncryptDecode:
+    container_name: '${ROOT_NAME}'
+    image: golang:1.13.3-alpine
+    ports:
+      - "38080:38080"
+    volumes:
+      - "./build/test/${DIST_VERSION}/:/usr/src/myapp"
+      - "./log:/usr/src/myapp/log"
+    environment:
+      - ENV_WEB_HTTPS_ENABLE=false
+      - ENV_WEB_AUTO_HOST=false
+      - ENV_WEB_SECOND_SERVICE=http://192.168.111.214:38081
+    #      - ENV_WEB_HOST=0.0.0.0:38080
+    working_dir: "/usr/src/myapp"
+    command: ["./main", "-c", "./config.yaml"]
