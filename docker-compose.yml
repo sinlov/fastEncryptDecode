@@ -10,16 +10,15 @@ networks:
 services:
   fastEncryptDecode:
     container_name: '${ROOT_NAME}'
-    image: golang:1.13.3-alpine
-    ports:
-      - "38080:38080"
+    image: '${ROOT_NAME}:${DIST_VERSION}' # see local docker file
+#    ports:
+#      - "38080:38080"
     volumes:
-      - "./build/test/${DIST_VERSION}/:/usr/src/myapp"
-      - "./log:/usr/src/myapp/log"
+      - "$PWD:/usr/src/myapp"
     environment:
       - ENV_WEB_HTTPS_ENABLE=false
       - ENV_WEB_AUTO_HOST=false
-      - ENV_WEB_SECOND_SERVICE=http://192.168.111.214:38081
-    #      - ENV_WEB_HOST=0.0.0.0:38080
+#      - ENV_WEB_HOST=${ENV_WEB_HOST}:38080
+      #      - ENV_WEB_HOST=0.0.0.0:38080
     working_dir: "/usr/src/myapp"
-    command: ["./main", "-c", "./config.yaml"]
+    command: ["make", "run"]
