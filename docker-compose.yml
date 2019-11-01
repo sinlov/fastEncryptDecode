@@ -9,8 +9,8 @@ networks:
 #  web-data:
 services:
   fastEncryptDecode:
-    container_name: '${ROOT_NAME}'
-    image: '${ROOT_NAME}:${DIST_VERSION}' # see local docker file
+    container_name: '${ROOT_DOCKER_CONTAINER}'
+    image: '${ROOT_DOCKER_IMAGE_NAME}:${ROOT_DOCKER_IMAGE_TAG}' # see local docker file
 #    ports:
 #      - "38080:38080"
     volumes:
@@ -21,4 +21,4 @@ services:
 #      - ENV_WEB_HOST=${ENV_WEB_HOST}:38080
       #      - ENV_WEB_HOST=0.0.0.0:38080
     working_dir: "/usr/src/myapp"
-    command: ["make", "run"]
+    command: ["make", "dep", "test"]
