@@ -7,6 +7,6 @@ FROM golang:1.13.3-stretch
 
 COPY $PWD /usr/src/myapp
 WORKDIR /usr/src/myapp
-RUN make init
+RUN make initDockerDevImages
 
 #ENTRYPOINT [ "go", "env" ]

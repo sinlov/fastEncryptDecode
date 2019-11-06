@@ -10,6 +10,16 @@ ROOT_DOCKER_IMAGE_NAME ?= $(ROOT_NAME)
 # can change as local set or read Makefile DIST_VERSION
 ROOT_DOCKER_IMAGE_TAG ?= $(DIST_VERSION)
 
+# For Docker dev images init
+initDockerDevImages:
+	@echo "~> start init this project in docker"
+	@echo "-> check version"
+	go version
+	@echo "-> check env golang"
+	go env
+	@echo "~> you can use [ make help ] see more task"
+	-GOPROXY="$(ENV_GO_PROXY)" GO111MODULE=on go mod vendor
+
 dockerLocalImageInit:
 	docker build --tag $(ROOT_DOCKER_IMAGE_NAME):$(DIST_VERSION) .
 
@@ -78,6 +88,7 @@ dockerPrune: dockerStop
 	ROOT_DOCKER_IMAGE_TAG=$(ROOT_DOCKER_IMAGE_TAG) \
 	DIST_VERSION=$(DIST_VERSION) \
 	docker-compose rm -f $(ROOT_DOCKER_CONTAINER)
+	-docker rmi -f $(ROOT_DOCKER_IMAGE_NAME):$(ROOT_DOCKER_IMAGE_TAG)
 	docker network prune
 	docker volume prune
 
