@@ -1,10 +1,10 @@
 package fastEncryptDecode
 
 import (
-	"testing"
-	"github.com/bmizerany/assert"
-	"fmt"
 	"encoding/binary"
+	"fmt"
+	"github.com/bmizerany/assert"
+	"testing"
 	"unsafe"
 )
 
@@ -26,12 +26,18 @@ func TestByteArr2HexStrArr(t *testing.T) {
 	str4Hex := "12345qwert"
 	fmt.Println("str4Hex", str4Hex)
 	hexStr := []byte(str4Hex)
-	fmt.Println("hexStr", hexStr)
+	// verify
+	wantHex := []byte{0x31, 0x32, 0x33, 0x34, 0x35, 0x71, 0x77, 0x65, 0x72, 0x74}
+	assert.Equal(t, wantHex, hexStr)
+
+	//fmt.Println("hexStr", hexStr)
 	hexStrArr := ByteArr2HexStrArr(hexStr)
-	for _, s := range hexStrArr {
-		fmt.Println("ByteArr2HexStrArr: ", s)
+	for id, s := range hexStrArr {
+		fmt.Println("ByteArr2HexStrArr: ", id, "->", s)
 	}
-	assert.Equal(t, nil, nil)
+	wantHexStr := []string{"0x31", "0x32", "0x33", "0x34", "0x35", "0x71", "0x77", "0x65", "0x72", "0x74"}
+	// verify
+	assert.Equal(t, wantHexStr, hexStrArr)
 }
 
 func TestHexStr2ByteArr(t *testing.T) {
