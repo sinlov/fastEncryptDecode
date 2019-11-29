@@ -1,8 +1,5 @@
+
 [TOC]
-
-# Info
-
-This is fast-encrypt-decode for golang uitls
 
 # Use
 
