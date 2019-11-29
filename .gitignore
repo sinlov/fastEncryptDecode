@@ -1,7 +1,15 @@
-### Go mod
+### build temple
+build/
+dist/
+
+### go mod
 
 go.sum
 vendor/
+
+### go test
+
+coverage.txt
 
 ### Go template
 # Compiled Object files, Static and Dynamic libs (Shared Objects)

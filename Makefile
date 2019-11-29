@@ -36,6 +36,7 @@ ENV_GO_PROXY ?= https://goproxy.io/
 # include MakeDockerRun.mk for docker run
 include MakeGoMod.mk
 include MakeDockerRun.mk
+include MakeGoTravis.mk
 
 checkEnvGOPATH:
 ifndef GOPATH
@@ -120,6 +121,6 @@ helpProjectRoot:
 	@echo "~> make testBenchmem - run go test benchmem case all"
 	@echo "~> make dev - run as develop"
 
-help: helpGoMod helpDockerRun helpProjectRoot
+help: helpGoMod helpDockerRun helpGoTravis helpProjectRoot
 	@echo ""
 	@echo "-- more info see Makefile include: MakeGoMod.mk MakeDockerRun.mk --"
