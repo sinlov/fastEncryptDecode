@@ -8,8 +8,15 @@ go.sum
 vendor/
 
 ### go test
-
+# out of testcase
+*.test
+# test coverage out
+coverage.out
 coverage.txt
+# testData folder of golang
+testdata/
+# Expected results when tested
+.golden
 
 ### Go template
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
