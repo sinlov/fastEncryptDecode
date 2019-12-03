@@ -6,7 +6,7 @@ TOP_DIR := $(shell pwd)
 # 	@ echo target file not found
 # endif
 
-DIST_VERSION := 1.0.0
+DIST_VERSION := v1.0.0
 # linux windows darwin  list as: go tool dist list
 DIST_OS := linux
 # amd64 386
@@ -96,7 +96,7 @@ run: dev
 
 test:
 	@echo "=> run test start"
-	@go test -test.v
+	@go test -test.v ./...
 
 testBenchmem:
 	@echo "=> run test benchmem start"
@@ -115,11 +115,11 @@ helpProjectRoot:
 	@echo "-- now build name: $(ROOT_NAME) version: $(DIST_VERSION)"
 	@echo "-- distTestOS or distReleaseOS will out abi as: $(DIST_OS) $(DIST_ARCH) --"
 	@echo ""
-	@echo "~> make init - check base env of this project"
-	@echo "~> make clean - remove binary file and log files"
-	@echo "~> make test - run test case all benchmem"
+	@echo "~> make init         - check base env of this project"
+	@echo "~> make clean        - remove binary file and log files"
+	@echo "~> make test         - run test case all benchmem"
 	@echo "~> make testBenchmem - run go test benchmem case all"
-	@echo "~> make dev - run as develop"
+	@echo "~> make dev          - run as develop"
 
 help: helpGoMod helpDockerRun helpGoTravis helpProjectRoot
 	@echo ""

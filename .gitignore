@@ -18,6 +18,9 @@ testdata/
 # Expected results when tested
 .golden
 
+### FlatBuffer template
+
+
 ### Go template
 # Compiled Object files, Static and Dynamic libs (Shared Objects)
 *.o
@@ -152,3 +155,5 @@ Icon
 Network Trash Folder
 Temporary Items
 .apdisk
+
+!cfg/config.conf

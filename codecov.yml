@@ -1,0 +1,5 @@
+# document see https://docs.codecov.io/docs/codecov-yaml
+
+## https://docs.codecov.io/docs/ignoring-paths
+ignore:
+  - "**/*_test.go"

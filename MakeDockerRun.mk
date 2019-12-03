@@ -94,17 +94,17 @@ dockerPrune: dockerStop
 
 helpDockerRun:
 	@echo "Help: MakeDockerRun.mk"
-	@echo "~> make dockerStop - stop docker-compose container-name at $(ROOT_DOCKER_CONTAINER)"
-	@echo "~> make dockerPrune - stop docker-compose container-name at $(ROOT_DOCKER_CONTAINER) and try to remove"
+	@echo "~> make dockerStop      - stop docker-compose container-name at $(ROOT_DOCKER_CONTAINER)"
+	@echo "~> make dockerPrune     - stop docker-compose container-name at $(ROOT_DOCKER_CONTAINER) and try to remove"
 	@echo "Before run this project in docker must use"
 	@echo "~> make dockerLocalImageInit to init Docker image"
 	@echo "or use"
 	@echo "~> make dockerLocalImageRebuild to rebuild Docker image"
 	@echo "After build Docker image success"
-	@echo "~> make dockerRunLinux - run docker-compose server as $(ROOT_DOCKER_IMAGE_NAME):$(DIST_VERSION) \
+	@echo "~> make dockerRunLinux  - run docker-compose server as $(ROOT_DOCKER_IMAGE_NAME):$(DIST_VERSION) \
 	container-name at $(ROOT_DOCKER_CONTAINER) in dockerRunLinux"
 	@echo "~> make dockerRunDarwin - run docker-compose server as $(ROOT_DOCKER_IMAGE_NAME):$(DIST_VERSION) \
 	container-name at $(ROOT_DOCKER_CONTAINER) in macOS"
-	@echo "~> make dockerRun - run image: $(ROOT_DOCKER_IMAGE_PARENT_NAME):$(ROOT_DOCKER_IMAGE_PARENT_TAG) \
+	@echo "~> make dockerRun       - run image: $(ROOT_DOCKER_IMAGE_PARENT_NAME):$(ROOT_DOCKER_IMAGE_PARENT_TAG) \
 	ROOT_DOCKER_CONTAINER=$(ROOT_DOCKER_CONTAINER)"
 	@echo ""
