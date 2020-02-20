@@ -9,8 +9,18 @@
 
 install
 
-```sh
+```bash
 go get -u -v github.com/sinlov/fastEncryptDecode
+```
+
+in go mod project
+
+```bash
+# see full version
+$ go list -m -versions github.com/sinlov/fastEncryptDecode
+# use as
+$ echo "go mod edit -require=$(go list -m -versions github.com/sinlov/fastEncryptDecode | awk '{print $1 "@" $NF}')"
+$ echo "go mod vendor"
 ```
 
 ## import
@@ -27,16 +37,16 @@ import (
 ```golang
     // Byte arrary to String
     pStr := ByteArr2Str(deAES)
-    
+
     // byte arrary to hex string
     hexString := ByteArr2HexStr(hexStr)
-    
+
     // byte arrary to hex string arrary
     hexStrArr := ByteArr2HexStrArr(hexStr)
     for _, s := range hexStrArr {
     		fmt.Println("ByteArr2HexStrArr: ", s)
     }
-    
+
     // hex string to byte arrary
     byteArr, err := HexStr2ByteArr(hexString)
 ```
@@ -47,12 +57,12 @@ import (
     // byte to uint8
     b := 0x13
     i := uint8(b)
-    
+
     // uint8 to byte
     var i uint8
     i = 3
     b := byte(i)
-    
+
     // byte[] to uint 16 32 64 use | package encoding/binary
     uNumber := binary.BigEndian.Uint16(data[12 : 36])
 ```
